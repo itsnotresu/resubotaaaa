@@ -35,7 +35,7 @@
         });
 
         const data = await res.json();
-        resposta.textContent = data.choices?.[0]?.message?.content || "Erro ao receber resposta.";
+        resposta.textContent = JSON.stringify(data, null, 2);
       } catch (err) {
         resposta.textContent = "Erro: " + err.message;
       }
