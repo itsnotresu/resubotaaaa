@@ -2,37 +2,54 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Login - pedro</title>
+  <title>Amo Guarulhos</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #f2f2f2; display: flex; justify-content: center; align-items: center; height: 100vh; }
-    .login-box { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.2); }
-    input { display: block; width: 100%; padding: 10px; margin-top: 10px; font-size: 16px; }
-    button { margin-top: 15px; padding: 10px; width: 100%; font-size: 16px; cursor: pointer; }
-    #msg { margin-top: 15px; font-weight: bold; }
+    body { font-family: sans-serif; text-align: center; background: #e6f2ff; height: 100vh; margin: 0; overflow: hidden; }
+    .popup { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.2); }
+    button { font-size: 18px; padding: 10px 20px; margin: 10px; cursor: pointer; position: relative; }
+    #nao { position: absolute; }
+    .firework { position: absolute; width: 10px; height: 10px; border-radius: 50%; background: red; animation: explode 1s ease-out forwards; }
+    @keyframes explode {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(5); opacity: 0; }
+    }
   </style>
 </head>
 <body>
-  <div class="login-box">
-    <h2>Entrar no pedro</h2>
-    <input type="text" id="login" placeholder="Login" />
-    <input type="password" id="senha" placeholder="Senha" />
-    <button onclick="entrar()">Entrar</button>
-    <div id="msg"></div>
+  <div class="popup">
+    <h2>Você também ama Guarulhos?</h2>
+    <button onclick="amar()">Sim ❤️</button>
+    <button id="nao" onclick="odiar()">Não 💣</button>
   </div>
 
   <script>
-    function entrar() {
-      const login = document.getElementById('login').value;
-      const senha = document.getElementById('senha').value;
-      const msg = document.getElementById('msg');
+    const naoBtn = document.getElementById("nao");
 
-      if (login === 'vasco123' && senha === 'vasco123') {
-        sessionStorage.setItem('logado', 'sim');
-        window.location.href = 'chat.html';
-      } else {
-        msg.style.color = 'red';
-        msg.textContent = 'Login ou senha incorretos.';
+    // botão "não" foge do cursor
+    naoBtn.addEventListener("mouseover", () => {
+      const x = Math.random() * (window.innerWidth - 100);
+      const y = Math.random() * (window.innerHeight - 100);
+      naoBtn.style.left = x + "px";
+      naoBtn.style.top = y + "px";
+    });
+
+    function amar() {
+      for (let i = 0; i < 30; i++) {
+        const f = document.createElement("div");
+        f.classList.add("firework");
+        f.style.top = (Math.random() * window.innerHeight) + "px";
+        f.style.left = (Math.random() * window.innerWidth) + "px";
+        document.body.appendChild(f);
+        setTimeout(() => f.remove(), 1000);
       }
+      setTimeout(() => {
+        alert("Nós também amamos você! ❤️");
+      }, 800);
+    }
+
+    function odiar() {
+      alert("💥 BUM! Não gostamos de você também 😠");
+      document.body.innerHTML = "<h1 style='margin-top: 40vh;'>💥 Explodiu... Adeus!</h1>";
     }
   </script>
 </body>
